@@ -19,57 +19,49 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(Pixels, PIN, NEO_GRB + NEO_KHZ800);
 // on a live circuit...if you must, connect GND first.
 
 
-float redStates[Pixels];
-float blueStates[Pixels];
-float greenStates[Pixels];
+float redStates;
+float blueStates;
+float greenStates;
 float fadeRate = 0.96;
 
 void setup() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 
-  for(uint16_t l = 0; l < Pixels; l++) {
-    redStates[l] = 0;
-    greenStates[l] = 0;
-    blueStates[l] = 0;
-  }
+  redStates = 0;
+  greenStates = 0;
+  blueStates = 0;
+
 }
 
 void loop () {
   starz ();
-
 }
- static void starz(){
+
+static void starz(){
  if (random(20) == 1) {
     uint16_t i = random(Pixels);
-    if (redStates[i] < 1 && greenStates[i] < 1 && blueStates[i] < 1) {
-      redStates[i] = random(256);
-      greenStates[i] = random(256);
-      blueStates[i] = random(256);
+    if (redStates < 1 && greenStates < 1 && blueStates < 1) {
+      redStates = random(256);
+      greenStates = random(256);
+      blueStates = random(256);
     }
   }
 
   for(uint16_t l = 0; l < Pixels; l++) {
-    if (redStates[l] > 1 || greenStates[l] > 1 || blueStates[l] > 1) {
-      strip.setPixelColor(l, redStates[l], greenStates[l], blueStates[l]);
+    if (l == i) {
+      strip.setPixelColor(l, redStates, greenStates, blueStates);
 
-      if (redStates[l] > 1) {
-        redStates[l] = (int)(redStates[l] * fadeRate);
-      } else {
-        redStates[l] = 0;
-      }
+      if (redStates > 1) {
+        redStates = (int)(redStates * fadeRate);
 
       if (greenStates[l] > 1) {
-        greenStates[l] = (int)(greenStates[l] * fadeRate);
-      } else {
-        greenStates[l] = 0;
-      }
-
+        greenStates = (int)(greenStates * fadeRate);
+   
       if (blueStates[l] > 1) {
-        blueStates[l] = (int)(blueStates[l] * fadeRate);
-      } else {
-        blueStates[l] = 0;
-      }
+        blueStates = (int)(blueStates * fadeRate);
+	  
+    // add delay here to compensate for the time gained due to array handling 
 
     } else {
       strip.setPixelColor(l, 0, 0, 0);
@@ -77,4 +69,4 @@ void loop () {
   }
   strip.show();
   delay(10);
- }
+}
