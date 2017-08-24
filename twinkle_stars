@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include <math.h>
 
 #define PIN 6
 #define Pixels 205
@@ -53,19 +54,19 @@ void loop () {
       strip.setPixelColor(l, redStates[l], greenStates[l], blueStates[l]);
 
       if (redStates[l] > 1) {
-        redStates[l] = (int)Math.round(redStates[l] * fadeRate);
+        redStates[l] = (int)(redStates[l] * fadeRate);
       } else {
         redStates[l] = 0;
       }
 
       if (greenStates[l] > 1) {
-        greenStates[l] = (int)Math.round(greenStates[l] * fadeRate);
+        greenStates[l] = (int)(greenStates[l] * fadeRate);
       } else {
         greenStates[l] = 0;
       }
 
       if (blueStates[l] > 1) {
-        blueStates[l] = (int)Math.round(blueStates[l] * fadeRate);
+        blueStates[l] = (int)(blueStates[l] * fadeRate);
       } else {
         blueStates[l] = 0;
       }
